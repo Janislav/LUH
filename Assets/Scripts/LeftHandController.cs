@@ -22,8 +22,7 @@ public class LeftHandController : MonoBehaviour {
 	}
 
     void Bang() {
-        if (controller.IsConnected)
-        {
+        if (controller.IsConnected) {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
             //PointableList pointables = frame.Pointables;
@@ -35,10 +34,7 @@ public class LeftHandController : MonoBehaviour {
                 Vector position = leftHand.PalmPosition;
                 int note = (int)position.y;
                 helmController.FrequencyOn(position.y);
-                //helmController.NoteOn(note, 1.0f, 0.1f);
-                //helmController.NoteOn(note + 3, 1.0f, 0.1f);
                 lastFrequency = position.y;
-                //Debug.Log(position);
             } else {
                 helmController.FrequencyOff(lastFrequency);
             }

@@ -16,6 +16,7 @@ public class RightHandController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        /*
         if (controller.IsConnected) {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
@@ -35,6 +36,6 @@ public class RightHandController : MonoBehaviour {
                 //Debug.Log("CrossMode: " + value);
                 helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
             }
-        }
+        }*/
 	}
 }

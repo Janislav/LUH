@@ -24,37 +24,6 @@ public class LeftHandController : MonoBehaviour {
         InvokeRepeating("Bang", 0.0f, intervall);
 	}
 
-    void Update() {
-        if (controller.IsConnected) {
-            Frame frame = controller.Frame();
-            HandList hands = frame.Hands;
-            //PointableList pointables = frame.Pointables;
-            //FingerList fingers = frame.Fingers;
-            //ToolList tools = frame.Tools;
-            Hand leftHand = hands[0];
-            if (leftHand.IsLeft)
-            {
-                Vector position = leftHand.PalmPosition;
-                float value = position.x;
-
-                if (value < 0) {
-                    value = value * -1;
-                }
-
-                value = value / 100;
-
-                if (value >= 1) {
-                    value = 1;
-                }
-                if (value <= 0) {
-                    value = 0;
-                }
-                Debug.Log("CrossMode: " + value);
-                helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
-            }
-        }
-    }
-
 	void Bang() {
         if (controller.IsConnected) {
             Frame frame = controller.Frame();

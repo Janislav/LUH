@@ -16,7 +16,7 @@ public class RightHandController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*
+        
         if (controller.IsConnected) {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
@@ -26,16 +26,25 @@ public class RightHandController : MonoBehaviour {
             Hand rightHand = hands[1];
             if (rightHand.IsRight) {
                 Vector position = rightHand.PalmPosition;
-                float value = position.y / 400;
-                if(value >= 1){
+
+                float value = position.x;
+
+                if (value < 0) {
+                    value = value * -1;
+                }
+
+                value = value / 100;
+
+                if (value >= 1) {
                     value = 1;
                 }
-                if(value <= 0) {
+                if (value <= 0) {
                     value = 0;
                 }
-                //Debug.Log("CrossMode: " + value);
+
+                Debug.Log("filterCutoff: " + value);
                 helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
             }
-        }*/
+        }
 	}
 }

@@ -27,13 +27,13 @@ public class RightHandController : MonoBehaviour {
             if (rightHand.IsRight) {
                 Vector position = rightHand.PalmPosition;
 
-                float value = position.x;
+                float value = position.y;
 
                 if (value < 0) {
                     value = value * -1;
                 }
 
-                value = value / 100;
+                value = value / 500;
 
                 if (value >= 1) {
                     value = 1;

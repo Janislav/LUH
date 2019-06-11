@@ -8,7 +8,7 @@ public class LeftHandController : MonoBehaviour {
 
     private Controller controller;
     public AudioHelm.HelmController helmController;
-    public int bpm;
+    //public int bpm;
     private Scale scale;
 
     private float lastFrequency;
@@ -16,15 +16,15 @@ public class LeftHandController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         controller = new Controller();
-        float invertedValue = bpm / 60;
-        float intervall = 1 / invertedValue;
-        Debug.Log("Intervall :" + intervall);
+        //float invertedValue = bpm / 60;
+        //float intervall = 1 / invertedValue;
+        //Debug.Log("Intervall :" + intervall);
         scale = new Scale();
         scale.setScale("Major Scale");
-        InvokeRepeating("Bang", 0.0f, intervall);
+        //InvokeRepeating("Bang", 0.0f, intervall);
 	}
 
-	void Bang() {
+	public void Bang() {
         if (controller.IsConnected) {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;

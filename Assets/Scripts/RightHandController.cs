@@ -20,9 +20,6 @@ public class RightHandController : MonoBehaviour {
         if (controller.IsConnected) {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
-            //PointableList pointables = frame.Pointables;
-            //FingerList fingers = frame.Fingers;
-            //ToolList tools = frame.Tools;
             Hand rightHand = hands[1];
             if (rightHand.IsRight) {
                 Vector position = rightHand.PalmPosition;
@@ -30,7 +27,7 @@ public class RightHandController : MonoBehaviour {
                 float value = position.y;
 
                 if (value < 0) {
-                    value = value * -1;
+                    value = value * - 1;
                 }
 
                 value = value / 500;
@@ -38,6 +35,7 @@ public class RightHandController : MonoBehaviour {
                 if (value >= 1) {
                     value = 1;
                 }
+
                 if (value <= 0) {
                     value = 0;
                 }

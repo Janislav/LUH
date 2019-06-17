@@ -7,15 +7,23 @@ public class VisualsManager : MonoBehaviour {
     public Color color1 = Color.red;
     public Color color2 = Color.blue;
     public float duration = 3.0F;
-    //public Camera cam;
+
     Renderer renderer;
+
+    private float frequency;
+    private float cutOff;
 
 	// Use this for initialization
 	void Start () {
-        //cam = GetComponent<Camera>();
-        //cam.clearFlags = CameraClearFlags.SolidColor;
         renderer = GetComponent<Renderer>();
 	}
+
+    Color ColorFabric() {
+        //Low freq is dark, high freq is light
+        //CutOff not defined currently
+        Color color = Color.red;
+        return color;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,8 +31,15 @@ public class VisualsManager : MonoBehaviour {
         renderer.material.SetColor("_Color", Color.Lerp(color1, color2, t));
 	}
 
+    public void OnFrequencyChange(float frequency) {
+        this.frequency = frequency;
+    }
+
+    public void OnCutOffChanged(float cutOff) {
+        this.cutOff = cutOff;
+    }
+
     public void Bang() {
-        /*float t = Mathf.PingPong(Time.time, duration) / duration;
-        cam.backgroundColor = Color.Lerp(color1, color2, t);*/
+        
     }
 }

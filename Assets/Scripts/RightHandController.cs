@@ -18,9 +18,11 @@ public class RightHandController : MonoBehaviour {
 	void Update () {
         
         if (controller.IsConnected) {
+            
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
             Hand rightHand = hands[1];
+
             if (rightHand.IsRight) {
                 Vector position = rightHand.PalmPosition;
 

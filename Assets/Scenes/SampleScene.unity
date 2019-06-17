@@ -385,6 +385,33 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9f2277f2b4414ff9abf05e783890171, type: 2}
   m_IsPrefabParent: 0
+--- !u!83 &1221928845
+AudioClip:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: helm
+  m_LoadType: 0
+  m_Channels: 1
+  m_Frequency: 44100
+  m_BitsPerSample: 32
+  m_Length: 0
+  m_IsTrackerFormat: 0
+  m_Ambisonic: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 0
+  m_Resource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_CompressionFormat: 0
+  m_EditorResource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_EditorCompressionFormat: 0
 --- !u!1 &1882289025
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +530,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helmController: {fileID: 2129271079}
+  frequencyChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1882289030}
+        m_MethodName: OnFrequencyChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: FrequencyChanged, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &2046466887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,7 +653,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: d797aee2286914835b44237b0ab8cebc,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 1221928845}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

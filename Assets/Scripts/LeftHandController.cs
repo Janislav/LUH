@@ -5,8 +5,6 @@ using UnityEngine;
 
 using Leap;
 
-[System.Serializable] public class FrequencyChanged : UnityEvent<float> { }
-
 public class LeftHandController : MonoBehaviour {
 
     private Controller controller;
@@ -14,7 +12,8 @@ public class LeftHandController : MonoBehaviour {
     private Scale scale;
     Gestures gestures;
 
-    public FrequencyChanged frequencyChanged;
+    public FloatEvent frequencyChanged;
+    public FloatEvent cutOffChanged;
 
     private float lastFrequency;
 
@@ -24,6 +23,44 @@ public class LeftHandController : MonoBehaviour {
         scale = new Scale();
         scale.setScale("Major Scale");
         gestures = new Gestures();
+	}
+
+	void Update() {
+
+        if (controller.IsConnected) {
+
+            Frame frame = controller.Frame();
+            HandList hands = frame.Hands;
+            Hand leftHand = hands[0];
+
+            if (leftHand.IsLeft)
+            {
+                Vector position = leftHand.PalmPosition;
+
+                float value = position.x;
+
+                if (value < 0)
+                {
+                    value = value * -1;
+                }
+
+                value = value / 500;
+
+                if (value >= 1)
+                {
+                    value = 1;
+                }
+
+                if (value <= 0)
+                {
+                    value = 0;
+                }
+
+                //Debug.Log("filterCutoff: " + value);
+                helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
+                cutOffChanged.Invoke(position.x);
+            }
+        }
 	}
 
 	public void Bang() {
@@ -47,12 +84,9 @@ public class LeftHandController : MonoBehaviour {
                     frequencyChanged.Invoke(freq);
                 } else {
                     helmController.FrequencyOn(lastFrequency);
-                    //changedLength.Invoke(lastFrequency);
                 }
             } else {
                 helmController.FrequencyOff(lastFrequency);
-                // TODO: send some off event here
-                //changedLength.Invoke(lastFrequency);
             }
         }
     }

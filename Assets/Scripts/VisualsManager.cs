@@ -6,7 +6,11 @@ public class VisualsManager : MonoBehaviour {
 
     public Color color1 = Color.red;
     public Color color2 = Color.blue;
-    public float duration = 3.0F;
+
+    private Color tempColor;
+    private bool toogle;
+
+    public float duration = 1.0F;
 
     Renderer renderer;
 
@@ -16,19 +20,57 @@ public class VisualsManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         renderer = GetComponent<Renderer>();
+        toogle = true;
 	}
 
     Color ColorFabric() {
         //Low freq is dark, high freq is light
         //CutOff not defined currently
-        Color color = Color.red;
+
+        int cc1 = (int) frequency;
+        int cc2 = ((int) cutOff) + 100;
+
+        if(cc1 < 0) {
+            cc1 = 0;
+        }
+
+        if(cc1 >= 255) {
+            cc1 = 255;
+        }
+
+        if (cc2 < 0) {
+            cc2 = 0;
+        }
+
+        if (cc2 >= 255) {
+            cc2 = 255;
+        }
+
+        int cc3 = Random.Range(cc1, cc2);
+
+        Debug.Log("cc1: " + cc1);
+        Debug.Log("cc2: " + cc2);
+        Debug.Log("cc3: " + cc3);
+
+        Color color = new Color32((byte) cc1, (byte) cc2, (byte) cc3, 255);
         return color;
     }
 	
 	// Update is called once per frame
 	void Update () {
         float t = Mathf.PingPong(Time.time, duration) / duration;
-        renderer.material.SetColor("_Color", Color.Lerp(color1, color2, t));
+
+        if (toogle)
+        {
+            color1 = ColorFabric();
+            toogle = false;
+        }
+        else
+        {
+            color2 = ColorFabric();
+            toogle = true;
+        }
+        renderer.material.color = Color.Lerp(color1, color2, t);
 	}
 
     public void OnFrequencyChange(float frequency) {
@@ -40,6 +82,5 @@ public class VisualsManager : MonoBehaviour {
     }
 
     public void Bang() {
-        
     }
 }

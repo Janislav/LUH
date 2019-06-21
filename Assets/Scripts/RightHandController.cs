@@ -16,35 +16,5 @@ public class RightHandController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        if (controller.IsConnected) {
-            
-            Frame frame = controller.Frame();
-            HandList hands = frame.Hands;
-            Hand rightHand = hands[1];
-
-            if (rightHand.IsRight) {
-                Vector position = rightHand.PalmPosition;
-
-                float value = position.y;
-
-                if (value < 0) {
-                    value = value * - 1;
-                }
-
-                value = value / 500;
-
-                if (value >= 1) {
-                    value = 1;
-                }
-
-                if (value <= 0) {
-                    value = 0;
-                }
-
-                Debug.Log("filterCutoff: " + value);
-                helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
-            }
-        }
 	}
 }

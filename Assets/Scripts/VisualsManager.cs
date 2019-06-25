@@ -6,6 +6,7 @@ public class VisualsManager : MonoBehaviour {
 
     public Color color1 = Color.red;
     public Color color2 = Color.blue;
+    public GameObject pointLight;
 
     private Color tempColor;
     private bool toogle;
@@ -48,10 +49,6 @@ public class VisualsManager : MonoBehaviour {
 
         int cc3 = Random.Range(cc1, cc2);
 
-        Debug.Log("cc1: " + cc1);
-        Debug.Log("cc2: " + cc2);
-        Debug.Log("cc3: " + cc3);
-
         Color color = new Color32((byte) cc1, (byte) cc2, (byte) cc3, 255);
         return color;
     }
@@ -74,6 +71,7 @@ public class VisualsManager : MonoBehaviour {
 	}
 
     public void OnFrequencyChange(float frequency) {
+        Debug.Log("Got fr for: " + this.gameObject.name);
         this.frequency = frequency;
     }
 
@@ -82,5 +80,11 @@ public class VisualsManager : MonoBehaviour {
     }
 
     public void Bang() {
+        if(pointLight != null) {
+            if (pointLight.GetComponent<Light>().enabled)
+                pointLight.GetComponent<Light>().enabled = false;
+            else
+                pointLight.GetComponent<Light>().enabled = true;
+        }
     }
 }

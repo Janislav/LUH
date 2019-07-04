@@ -25,15 +25,49 @@ public class LeftHandController : MonoBehaviour {
         gestures = new Gestures();
 	}
 
+    Hand getLefttHand(HandList hands)
+    {
+        if (hands.IsEmpty)
+        {
+            return null;
+        }
+
+        if (hands.Count == 1)
+        {
+            if (hands[0].IsLeft && hands[0].IsValid)
+            {
+                return hands[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        if (hands.Count > 1)
+        {
+            foreach (Hand hand in hands)
+            {
+                if (hand.IsLeft && hand.IsValid)
+                {
+                    return hand;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
 	void Update() {
 
         if (controller.IsConnected) {
 
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
-            Hand leftHand = hands[0];
+            Hand leftHand = getLefttHand(hands);
 
-            if (leftHand.IsLeft)
+            if (leftHand != null)
             {
                 Vector position = leftHand.PalmPosition;
 

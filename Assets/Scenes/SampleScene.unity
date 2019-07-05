@@ -550,7 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e016203b4ab443348befeb59a6742bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 60
+  bpm: 160
   b_Event:
     m_PersistentCalls:
       m_Calls:
@@ -643,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9f2277f2b4414ff9abf05e783890171, type: 3}
---- !u!83 &1303320070
+--- !u!83 &1454737017
 AudioClip:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -872,7 +872,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: d797aee2286914835b44237b0ab8cebc,
     type: 2}
-  m_audioClip: {fileID: 1303320070}
+  m_audioClip: {fileID: 1454737017}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

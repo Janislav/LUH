@@ -24,7 +24,7 @@ public class LeftHandController : MonoBehaviour {
 	void Start () {
         controller = new Controller();
         scale = new Scale();
-        scale.setScale("Major Scale");
+        scale.setScale("BMajor");
         gestures = new Gestures();
         leapAPI = new LeapAPI();
 	}
@@ -76,8 +76,9 @@ public class LeftHandController : MonoBehaviour {
                     helmController.NoteOn(lastNote, 1, 1);
                 } else {
                     int note = scale.generateNote((int)position.y);
-                    helmController.NoteOn(note, 1, 1);
-                    lastNote = note;
+                    int noteInKey = scale.getNextNoteInKey(note);
+                    helmController.NoteOn(noteInKey, 1, 1);
+                    lastNote = noteInKey;
                 }
             }
         }

@@ -24,7 +24,7 @@ public class LeftHandController : MonoBehaviour {
 	void Start () {
         controller = new Controller();
         scale = new Scale();
-        scale.setScale("BMajor");
+        scale.setScale("CMajor");
         gestures = new Gestures();
         leapAPI = new LeapAPI();
 	}

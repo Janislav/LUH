@@ -10,44 +10,16 @@ public class RightHandController : MonoBehaviour {
     private Controller controller;
     public AudioHelm.HelmController helmController;
     Gestures gestures;
-
+    private LeapAPI leapAPI;
     public Text console;
-
     private int state;
-
-    Hand getRightHand(HandList hands)
-    {
-        if (hands.IsEmpty)
-        {
-            return null;
-        }
-
-        if (hands.Count == 1)
-        {
-            if(hands[0].IsRight && hands[0].IsValid) {
-                return hands[0];
-            } else {
-                return null;
-            }
-        }
-
-        if(hands.Count > 1) {
-            foreach(Hand hand in hands) {
-                if(hand.IsRight && hand.IsValid) {
-                    return hand;
-                }
-            }
-        }
-
-        return null;
-    }
 
 	// Use this for initialization
 	void Start () {
         controller = new Controller();
         gestures = new Gestures();
+        leapAPI = new LeapAPI();
         state = 0;
-        helmController.SetParameterValue(AudioHelm.Param.kArpOn, 1);
 	}
 	
 	// Update is called once per frame
@@ -56,7 +28,7 @@ public class RightHandController : MonoBehaviour {
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
 
-            Hand rightHand = getRightHand(hands);
+            Hand rightHand = leapAPI.GetRightHand(hands);
 
             if(rightHand != null) {
                 

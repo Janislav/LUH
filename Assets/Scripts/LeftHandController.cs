@@ -15,7 +15,10 @@ public class LeftHandController : MonoBehaviour {
     public FloatEvent frequencyChanged;
     public FloatEvent cutOffChanged;
 
+    private LeapAPI leapAPI;
+
     private float lastFrequency;
+    private int lastNote = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -23,49 +26,15 @@ public class LeftHandController : MonoBehaviour {
         scale = new Scale();
         scale.setScale("Major Scale");
         gestures = new Gestures();
+        leapAPI = new LeapAPI();
 	}
 
-    Hand getLefttHand(HandList hands)
-    {
-        if (hands.IsEmpty)
-        {
-            return null;
-        }
-
-        if (hands.Count == 1)
-        {
-            if (hands[0].IsLeft && hands[0].IsValid)
-            {
-                return hands[0];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        if (hands.Count > 1)
-        {
-            foreach (Hand hand in hands)
-            {
-                if (hand.IsLeft && hand.IsValid)
-                {
-                    return hand;
-                }
-            }
-        }
-
-        return null;
-    }
-
-
 	void Update() {
-
         if (controller.IsConnected) {
 
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
-            Hand leftHand = getLefttHand(hands);
+            Hand leftHand = leapAPI.GetLeftHand(hands);
 
             if (leftHand != null)
             {
@@ -90,7 +59,6 @@ public class LeftHandController : MonoBehaviour {
                     value = 0;
                 }
 
-                //Debug.Log("filterCutoff: " + value);
                 helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
                 cutOffChanged.Invoke(position.x);
             }
@@ -98,29 +66,19 @@ public class LeftHandController : MonoBehaviour {
 	}
 
 	public void Bang() {
-        
         if (controller.IsConnected) {
-            
             Frame frame = controller.Frame();
             HandList hands = frame.Hands;
-            Hand leftHand = hands[0];
-
-            if (leftHand.IsLeft) {
-                
-                helmController.FrequencyOff(lastFrequency);
+            Hand leftHand = leapAPI.GetLeftHand(hands);
+            if (leftHand != null) {
                 Vector position = leftHand.PalmPosition;
-
-                if(!gestures.isFist(leftHand)) {
-                    
-                    int freq = scale.approxByScale(position.y);
-                    helmController.FrequencyOn(freq);
-                    lastFrequency = freq;
-                    frequencyChanged.Invoke(freq);
+                if(gestures.isFist(leftHand)) {
+                    helmController.NoteOn(lastNote, 1, 1);
                 } else {
-                    helmController.FrequencyOn(lastFrequency);
+                    int note = scale.generateNote((int)position.y);
+                    helmController.NoteOn(note, 1, 1);
+                    lastNote = note;
                 }
-            } else {
-                helmController.FrequencyOff(lastFrequency);
             }
         }
     }

@@ -41,4 +41,14 @@ public class Scale {
         int scaleFactor = ((int) (frequency / finalBaseNote)) + 1;
         return finalBaseNote * scaleFactor;
     }
+
+    /**
+    **/
+    public int generateNote(int yPos) {
+        if(yPos <= 0) {
+            return 1;
+        }
+        int temp = yPos / 5;
+        return temp;
+    }
 }

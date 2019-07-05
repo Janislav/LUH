@@ -66,20 +66,17 @@ public class RightHandController : MonoBehaviour {
 
                 float value = position.y;
 
-                if (value < 0)
-                {
+                if (value < 0) {
                     value = value * -1;
                 }
 
                 value = value / 300;
 
-                if (value >= 1)
-                {
+                if (value >= 1) {
                     value = 1;
                 }
 
-                if (value <= 0)
-                {
+                if (value <= 0) {
                     value = 0;
                 }
 

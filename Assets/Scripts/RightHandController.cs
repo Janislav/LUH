@@ -71,7 +71,7 @@ public class RightHandController : MonoBehaviour {
                     value = value * -1;
                 }
 
-                value = value / 500;
+                value = value / 300;
 
                 if (value >= 1)
                 {
@@ -82,33 +82,22 @@ public class RightHandController : MonoBehaviour {
                 {
                     value = 0;
                 }
-                
-                //Reverb
-                if(state == 0) {
+
+                if (gestures.isPointer(rightHand)) {
                     Debug.Log("Reverb: " + value);
-                    helmController.SetParameterValue(AudioHelm.Param.kMonoLfo1Tempo, value);
-                    //helmController.SetParameterPercent(AudioHelm.Param.kDelayFeedback, value);
+                    console.text = "Reverb Mode";
+                    helmController.SetParameterValue(AudioHelm.Param.kReverbDryWet, value);
+                    return;
                 }
 
-                //Arp
-                if(state == 1) {
-                    Debug.Log("Arp: " + value);
-                    helmController.SetParameterPercent(AudioHelm.Param.kArpTempo, value);
+                if (gestures.isPeace(rightHand)) {
+                    console.text = "Modulation Mode";
+                    Debug.Log("Modulation: " + value);
+                    helmController.SetParameterPercent(AudioHelm.Param.kMonoLfo1Tempo, value);
+                    return;
                 }
 
-                if(gestures.isPointer(rightHand)) {
-                    if(state != 0) {
-                        console.text = "Reverb Mode";
-                    }
-                    state = 0;
-                }
-
-                if(gestures.isPeace(rightHand)) {
-                    if (state != 1) {
-                        console.text = "Arp Mode";
-                    }
-                    state = 1;
-                }
+                console.text = "Right hand no mode";
             }
         }
 	}

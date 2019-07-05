@@ -41,4 +41,17 @@ public class Gestures {
             return false;
         }
     }
+
+    public bool isThumpAndPointer(Hand hand) {
+        if ( hand.Fingers[0].IsExtended && hand.Fingers[1].IsExtended &&
+            !hand.Fingers[2].IsExtended && !hand.Fingers[3].IsExtended &&
+            !hand.Fingers[4].IsExtended)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

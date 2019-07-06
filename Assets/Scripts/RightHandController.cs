@@ -42,7 +42,7 @@ public class RightHandController : MonoBehaviour {
                     value = value * -1;
                 }
 
-                value = value / 300;
+                value = value / 150;
 
                 if (value >= 1) {
                     value = 1;

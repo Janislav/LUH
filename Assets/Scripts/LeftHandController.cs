@@ -36,6 +36,7 @@ public class LeftHandController : MonoBehaviour {
             HandList hands = frame.Hands;
             Hand leftHand = leapAPI.GetLeftHand(hands);
 
+
             if (leftHand != null)
             {
                 Vector position = leftHand.PalmPosition;
@@ -47,7 +48,7 @@ public class LeftHandController : MonoBehaviour {
                     value = value * -1;
                 }
 
-                value = value / 500;
+                value = value / 300;
 
                 if (value >= 1)
                 {
@@ -75,7 +76,7 @@ public class LeftHandController : MonoBehaviour {
                 if(gestures.isFist(leftHand)) {
                     helmController.NoteOn(lastNote, 1, 1);
                 } else {
-                    int note = scale.generateNote((int)position.y);
+                    int note = scale.generateNote((int)position.y) + 40;
                     int noteInKey = scale.getNextNoteInKey(note);
                     helmController.NoteOn(noteInKey, 1, 1);
                     lastNote = noteInKey;

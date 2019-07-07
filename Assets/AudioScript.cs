@@ -7,8 +7,13 @@ public class AudioScript : MonoBehaviour
 {
     public AudioSource _audioSource;
     public static float[] _samples = new float[512];
-    public static float[] _freqBand = new float[8];
-    // Start is called before the first frame update
+    float[] _freqBand = new float[8];
+    float[] _bandBuffer = new float[8];
+    float[] _bufferDecrease = new float[8];
+
+    float[] _freqBandHighest = new float[8];
+    public static float[] _audioBand = new float[8];
+    public static float[] _audioBandBuffer = new float[8];
     void Start()
     {
         _audioSource.GetComponent<AudioSource> ();
@@ -20,6 +25,41 @@ public class AudioScript : MonoBehaviour
 
         GetSpectrumAudioSource();
         MakeFrequencyBand();
+        BandBuffer();
+        CreatAudioBands();
+    }
+
+    void CreatAudioBands()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (_freqBand[i] > _freqBandHighest[i])
+            {
+                _freqBandHighest[i] = _freqBand[i];
+            }
+            _audioBand[i] = (_freqBand[i] / _freqBandHighest[i]);
+            _audioBandBuffer[i] = (_bandBuffer[i] / _freqBandHighest[i]);
+        }
+
+    }
+
+
+    void BandBuffer()
+    {
+        for (int g = 0; g < 8; ++g)
+        {
+            if (_freqBand[g] > _bandBuffer[g])
+            {
+                _bandBuffer[g] = _freqBand[g];
+                _bufferDecrease[g] = 0.005f;
+            }
+            if (_freqBand[g] < _bandBuffer[g])
+            {
+                _bandBuffer[g] -= _bufferDecrease[g];
+                _bufferDecrease[g] *= 1.2f;
+            }
+        }
+
     }
 
     void GetSpectrumAudioSource()

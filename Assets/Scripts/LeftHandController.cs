@@ -61,7 +61,7 @@ public class LeftHandController : MonoBehaviour {
                 }
 
                 helmController.SetParameterPercent(AudioHelm.Param.kFilterCutoff, value);
-                cutOffChanged.Invoke(position.x);
+                cutOffChanged.Invoke(position.y);
             }
         }
 	}

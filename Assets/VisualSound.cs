@@ -14,9 +14,7 @@ public class VisualSound : MonoBehaviour
 
     public float pitchValue;
 
-
-
-
+    private int indexCounter = 0;
 
     public float backgroundIntensity;
 
@@ -282,7 +280,8 @@ public class VisualSound : MonoBehaviour
 
 
 
-            visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
+            //visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
+            visualList[visualIndex].localScale = Vector3.up + new Vector3(0,scaleY,0);
 
             visualIndex++;
 
@@ -296,7 +295,14 @@ public class VisualSound : MonoBehaviour
 
     }
 
-
+    public void UpdateSampleArray(float value)
+    {
+        if (indexCounter == SAMPLE_SIZE) indexCounter = 0;
+        float v = value;
+        samples[indexCounter] = v;
+        spectrum[indexCounter] = v;
+        indexCounter++;
+    }
 
     private void AnalyzeSound()
     {
@@ -305,7 +311,7 @@ public class VisualSound : MonoBehaviour
 
 
 
-        source.GetOutputData(samples, 0);
+        //source.GetOutputData(samples, 0);
 
 
 
@@ -344,7 +350,7 @@ public class VisualSound : MonoBehaviour
 
 
 
-        source.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
+        //source.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
 
 
 

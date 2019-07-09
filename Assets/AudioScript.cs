@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent (typeof(AudioSource))]
 public class AudioScript : MonoBehaviour
 {
-    public AudioSource _audioSource;
+    public GameObject synth;
+
+    public AudioMixer audioMixer;
+
+    public AudioHelm.HelmController helmController;
+
+    private int indexCounter;
+
+    private AudioSource _audioSource;
     public static float[] _samples = new float[512];
     float[] _freqBand = new float[8];
     float[] _bandBuffer = new float[8];
@@ -16,7 +25,12 @@ public class AudioScript : MonoBehaviour
     public static float[] _audioBandBuffer = new float[8];
     void Start()
     {
-        _audioSource.GetComponent<AudioSource> ();
+        //helmController.GetComponent<AudioSource>;
+        _audioSource = this.GetComponent<AudioSource>();
+        //helmController.GetComponent<AudioClip>()
+        //_audioSource = helmController.GetComponent<AudioSource>();
+        Debug.Log("AudioSource: " + _audioSource);
+        indexCounter = 0;
     }
 
     // Update is called once per frame
@@ -43,7 +57,6 @@ public class AudioScript : MonoBehaviour
 
     }
 
-
     void BandBuffer()
     {
         for (int g = 0; g < 8; ++g)
@@ -62,18 +75,27 @@ public class AudioScript : MonoBehaviour
 
     }
 
-    void GetSpectrumAudioSource()
-    {
+	public void UpdateSampleArray(float value)
+	{
+        if (indexCounter == 512) indexCounter = 0;
+        float v = value / 200;
+        _samples[indexCounter] = v;
+        indexCounter++;
+	}
 
-        _audioSource.GetSpectrumData(_samples, 0, FFTWindow.Blackman);
+	void GetSpectrumAudioSource()
+    {
+        /*for (int i = 0; i < 512; i++) {
+            _samples[i] = Random.Range(-1, 1);
+        }*/
+        //_audioSource.GetSpectrumData(_samples, 0, FFTWindow.Blackman);
+        //_audioSource.GetOutputData(_samples, 0);
     }
     void MakeFrequencyBand()
     {
         int count = 0;
         for(int i =0; i<8; i++)
         {
-
-
             float average = 0;
 
             int sampleCount = (int)Mathf.Pow(2, i) * 2;
